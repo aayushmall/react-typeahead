@@ -19,7 +19,7 @@ export default function App() {
       return;
     }
 
-    let url = "https://c71cj.sse.codesandbox.io";
+    let url = "http://localhost:8080";
 
     if (searchType === "client") {
       url += `/clients`;
