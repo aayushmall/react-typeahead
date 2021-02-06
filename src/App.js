@@ -15,6 +15,10 @@ export default function App() {
   const [key, setKey] = useState(false);
 
   const handleChange = async (e, value) => {
+    if (!value) {
+      return;
+    }
+
     let url = "https://c71cj.sse.codesandbox.io";
 
     if (searchType === "client") {
@@ -39,11 +43,19 @@ export default function App() {
 
   const getOptionSelected = (option, value) => {
     if (searchType === "client") {
-      return option.email === value.email;
+      console.log(option.email, value.email);
+
+      if (option.email && value.email) {
+        return option.email.toLowerCase() === value.email.toLowerCase();
+      }
     } else if (searchType === "order") {
-      return option.type === value.type;
+      if (option.type && value.type) {
+        return option.type.toLowerCase() === value.type.toLowerCase();
+      }
     } else if (searchType === "asset") {
-      return option.name === value.name;
+      if (option.name && value.name) {
+        return option.name.toLowerCase() === value.name.toLowerCase();
+      }
     }
   };
 
@@ -66,23 +78,36 @@ export default function App() {
   return (
     <div className="App">
       <h4>Welcome to </h4>
-      <h5>Search you entities here</h5>
+      <h5 style={{ textDecoration: "underline" }}>Search Your Entities</h5>
 
       <FormControl component="fieldset">
-        <FormLabel component="legend">Entities</FormLabel>
         <RadioGroup
+          row
           aria-label="entities"
           name="entities"
           value={searchType}
           onChange={selectChange}
         >
+          <FormLabel component="legend" className="entities-label">
+            <b>Entities:</b>
+          </FormLabel>
           <FormControlLabel
             value="client"
-            control={<Radio />}
+            control={<Radio color="primary" />}
             label="Clients"
           />
-          <FormControlLabel value="asset" control={<Radio />} label="Assets" />
-          <FormControlLabel value="order" control={<Radio />} label="Orders" />
+          <FormControlLabel
+            value="asset"
+            control={<Radio />}
+            label="Assets"
+            color="primary"
+          />
+          <FormControlLabel
+            value="order"
+            control={<Radio />}
+            label="Orders"
+            color="primary"
+          />
         </RadioGroup>
       </FormControl>
 
@@ -91,13 +116,19 @@ export default function App() {
         id="combo-box-demo"
         options={options}
         getOptionLabel={getLabel}
-        style={{ width: 450 }}
+        style={{ width: 400, marginLeft: "35%" }}
+        openOnFocus
         multiple={true}
         filterSelectedOptions={true}
         onInputChange={handleChange}
         getOptionSelected={getOptionSelected}
         renderInput={(params) => (
-          <TextField {...params} label="Combo box" variant="outlined" />
+          <TextField
+            {...params}
+            label="Combo box"
+            variant="outlined"
+            margin="normal"
+          />
         )}
       />
     </div>

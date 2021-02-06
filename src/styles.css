@@ -2,3 +2,9 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.entities-label {
+  margin-top: 4%;
+  margin-right: 10px;
+  color: rgb(16, 31, 44);
+}
